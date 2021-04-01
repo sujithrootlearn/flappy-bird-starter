@@ -24,7 +24,7 @@ let isGameOver = false;
 
 // basic animation template
 function draw(){
-    
+
     if (isGameOver) {
         cancelAnimationFrame(intervalId)
         return;
@@ -32,5 +32,6 @@ function draw(){
     intervalId = requestAnimationFrame(draw)
 }
 
-
-draw()
+window.addEventListener('load', () => {
+    draw()
+})
