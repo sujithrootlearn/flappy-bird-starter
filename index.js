@@ -27,9 +27,12 @@ function draw(){
 
     if (isGameOver) {
         cancelAnimationFrame(intervalId)
-        return;
+
     }
-    intervalId = requestAnimationFrame(draw)
+    else {
+        intervalId = requestAnimationFrame(draw)
+    }
+    
 }
 
 window.addEventListener('load', () => {
