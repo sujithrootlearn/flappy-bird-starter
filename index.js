@@ -1,6 +1,7 @@
 let canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
-let pipeGap = 60, pipeX = 200, pipeY = 0, birdX=50, birdY = 50; keyPress = false; fgX = 0; score = 0;
+let pipeGap = 60, pipeX = 200, pipeY = 0, birdX=50, birdY = 50; keyPress = false, fgX = 0, score = 0;
+let gameStart = false, gameRestart = false;
 canvas.style.border = '2px solid black';
 
 
@@ -66,10 +67,17 @@ function draw(){
     if (isGameOver) {
         ctx.fillStyle = "black";
         ctx.font = "14px Arial";
-        ctx.fillText("GAME OVER", canvas.width-90,17);       
-        cancelAnimationFrame(intervalId)
+        ctx.fillText("GAME OVER", canvas.width-90,16);
+        
+        setTimeout(()=>{
+            cancelAnimationFrame(intervalId);        
+            ctx.fillStyle = "white";
+            ctx.font = "14px Arial";
+            ctx.fillText("Press r key to restart", canvas.width-132,60);
+        },1500)      
+        
     }
-    else {
+    else if(gameStart || gameRestart){
         intervalId = requestAnimationFrame(draw)        
     }
 
@@ -82,8 +90,12 @@ function draw(){
 }
 
 
+
 window.addEventListener('load', () => {
     draw();
+    ctx.fillStyle = "white";
+    ctx.font = "15px Arial";
+    ctx.fillText("Press space key to start", canvas.width-218,220);
     window.addEventListener('keydown',(evt)=>{
         if(evt.code==='ArrowUp'){
             keyPress=true;
@@ -95,5 +107,15 @@ window.addEventListener('load', () => {
             keyPress=false;
         }
     })
+    window.addEventListener('keydown',(evt)=>{              
+        if(!gameStart && evt.code==='Space'){
+            gameStart = true;
+            draw();
+        }else if(evt.code==='KeyR'){           
+            location.reload();            
+        }      
+    }) 
+    
+     
 
 })
